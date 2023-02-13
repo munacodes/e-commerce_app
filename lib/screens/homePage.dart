@@ -160,11 +160,11 @@ class HomePage extends StatelessWidget {
                             price: 30.00,
                             image: 'Suit.jpg',
                           ),
-                          /*_buildFeaturedProduct(
+                          _buildFeaturedProduct(
                             name: 'Watch',
                             price: 33.00,
                             image: 'Watch.jpg',
-                          ),*/
+                          ),
                         ],
                       ),
                     ],
