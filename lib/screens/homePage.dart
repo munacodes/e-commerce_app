@@ -1,46 +1,7 @@
+import 'package:e_commerce/widgets/singleProduct.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  Widget _buildFeaturedProduct({
-    required String name,
-    required double price,
-    required String image,
-  }) {
-    return Card(
-      child: Container(
-        height: 250,
-        width: 168,
-        child: Column(
-          children: [
-            Container(
-              height: 190,
-              width: 160,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/$image'),
-                ),
-              ),
-            ),
-            Text(
-              '\$ $price',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
-                color: Color(0xFF9B96D6),
-              ),
-            ),
-            Text(
-              name,
-              style: const TextStyle(
-                fontSize: 17,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildCategoryProduct({required String image, required int color}) {
     return CircleAvatar(
       maxRadius: 35,
@@ -84,12 +45,12 @@ class HomePage extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {},
-              icon: const Icon(Icons.notifications_none),
+              icon: const Icon(Icons.search),
               color: Colors.black,
             ),
             IconButton(
               onPressed: () {},
-              icon: const Icon(Icons.send),
+              icon: const Icon(Icons.notifications_none),
               color: Colors.black,
             ),
           ],
@@ -108,14 +69,94 @@ class HomePage extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextFormField(
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.search),
-                            hintText: 'Search Something',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
+                        Column(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 50,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: const [
+                                      Text(
+                                        'Category',
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        'See all',
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 60,
+                                  child: Row(
+                                    children: [
+                                      _buildCategoryProduct(
+                                          image: "Dress.png",
+                                          color: 0xFF33DCFD),
+                                      _buildCategoryProduct(
+                                          image: "Shirt.jpg",
+                                          color: 0xFFF38CDD),
+                                      _buildCategoryProduct(
+                                          image: "Shoe.png", color: 0xFF4FF2AF),
+                                      _buildCategoryProduct(
+                                          image: "Pants.png",
+                                          color: 0xFF74ACF7),
+                                      _buildCategoryProduct(
+                                          image: "Tie.png", color: 0xFFFC6C8D),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: const [
+                                    Text(
+                                      'Featured',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      'See all',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: const [
+                                    SingleProduct(
+                                      name: 'Man Long T-Shirt',
+                                      price: 30.0,
+                                      image: 'Man.png',
+                                    ),
+                                    SingleProduct(
+                                      name: 'Watch',
+                                      price: 33.0,
+                                      image: 'Watch.jpg',
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ),
+                          ],
                         ),
                         Container(
                           height: 50,
@@ -127,7 +168,7 @@ class HomePage extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: const [
                                   Text(
-                                    'Featured',
+                                    'New Achives',
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -145,120 +186,31 @@ class HomePage extends StatelessWidget {
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              _buildFeaturedProduct(
-                                name: 'Male Suit',
-                                price: 30.00,
-                                image: 'Suit.jpg',
-                              ),
-                              _buildFeaturedProduct(
-                                name: 'Watch',
-                                price: 33.00,
-                                image: 'Watch.jpg',
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: 70,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
-                          'Category',
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'See all',
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 100,
-                    child: Row(
-                      children: [
-                        _buildCategoryProduct(
-                            image: "Dress.png", color: 0xFF33DCFD),
-                        _buildCategoryProduct(
-                            image: "Shirt.jpg", color: 0xFFF38CDD),
-                        _buildCategoryProduct(
-                            image: "Male Shoe.jpg", color: 0xFF4FF2AF),
-                        _buildCategoryProduct(
-                            image: "Hood.png", color: 0xFF74ACF7),
-                        _buildCategoryProduct(
-                            image: "Ring.png", color: 0xFFFC6C8D),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 50,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              'New Achives',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              'See all',
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: const [
+                                    SingleProduct(
+                                      name: 'Male\'s Watch',
+                                      price: 30.0,
+                                      image: 'Watch 2.png',
+                                    ),
+                                    SingleProduct(
+                                      name: 'Male\'s Pants',
+                                      price: 33.0,
+                                      image: 'Pants.png',
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ],
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              _buildFeaturedProduct(
-                                name: 'Canvas',
-                                price: 30.00,
-                                image: 'Canvas.jpg',
-                              ),
-                              _buildFeaturedProduct(
-                                name: 'Polo',
-                                price: 33.00,
-                                image: 'Polo.jpg',
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
                   ),
                 ],
               ),
