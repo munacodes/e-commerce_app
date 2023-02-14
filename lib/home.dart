@@ -1,3 +1,4 @@
+import 'package:e_commerce/screens/screensExport.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -10,8 +11,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-    );
+    return HomePage();
   }
 }

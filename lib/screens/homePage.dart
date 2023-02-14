@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
     return Card(
       child: Container(
         height: 250,
-        width: 180,
+        width: 168,
         child: Column(
           children: [
             Container(
@@ -43,12 +43,11 @@ class HomePage extends StatelessWidget {
 
   Widget _buildCategoryProduct({required String image, required int color}) {
     return CircleAvatar(
-      maxRadius: 38,
+      maxRadius: 35,
       backgroundColor: Color(color),
       child: Container(
-        height: 40,
+        height: 50,
         child: Image(
-          color: Colors.white,
           image: AssetImage('assets/images/$image'),
         ),
       ),
@@ -74,7 +73,10 @@ class HomePage extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: Colors.grey[100],
           leading: IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.black,
+            ),
             onPressed: () {
               _key.currentState!.openDrawer();
             },
@@ -82,12 +84,12 @@ class HomePage extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {},
-              icon: Icon(Icons.notifications_none),
+              icon: const Icon(Icons.notifications_none),
               color: Colors.black,
             ),
             IconButton(
               onPressed: () {},
-              icon: Icon(Icons.send),
+              icon: const Icon(Icons.send),
               color: Colors.black,
             ),
           ],
@@ -96,14 +98,14 @@ class HomePage extends StatelessWidget {
           height: double.infinity,
           width: double.infinity,
           margin: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
+          child: ListView(
             children: [
-              Container(
-                height: 120,
-                width: double.infinity,
-                child: ListView(
-                  children: [
-                    Column(
+              Column(
+                children: [
+                  Container(
+                    height: 120,
+                    width: double.infinity,
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextFormField(
@@ -145,81 +147,39 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                  Row(
                     children: [
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildFeaturedProduct(
-                            name: 'Male Suit',
-                            price: 30.00,
-                            image: 'Suit.jpg',
-                          ),
-                          _buildFeaturedProduct(
-                            name: 'Watch',
-                            price: 33.00,
-                            image: 'Watch.jpg',
+                          Row(
+                            children: [
+                              _buildFeaturedProduct(
+                                name: 'Male Suit',
+                                price: 30.00,
+                                image: 'Suit.jpg',
+                              ),
+                              _buildFeaturedProduct(
+                                name: 'Watch',
+                                price: 33.00,
+                                image: 'Watch.jpg',
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ],
                   ),
-                ],
-              ),
-              Container(
-                height: 70,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      'Category',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'See all',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                height: 100,
-                child: Row(
-                  children: [
-                    _buildCategoryProduct(
-                        image: "Dress.png", color: 0xFF33DCFD),
-                    _buildCategoryProduct(
-                        image: "Shirt.jpg", color: 0xFFF38CDD),
-                    _buildCategoryProduct(
-                        image: "Male Shoe.jpg", color: 0xFF4FF2AF),
-                    _buildCategoryProduct(image: "Hood.png", color: 0xFF74ACF7),
-                    _buildCategoryProduct(image: "Ring.png", color: 0xFFFC6C8D),
-                  ],
-                ),
-              ),
-              Container(
-                height: 50,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Row(
+                  Container(
+                    height: 70,
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: const [
                         Text(
-                          'New Achives',
+                          'Category',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -232,25 +192,69 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                  Container(
+                    height: 100,
+                    child: Row(
+                      children: [
+                        _buildCategoryProduct(
+                            image: "Dress.png", color: 0xFF33DCFD),
+                        _buildCategoryProduct(
+                            image: "Shirt.jpg", color: 0xFFF38CDD),
+                        _buildCategoryProduct(
+                            image: "Male Shoe.jpg", color: 0xFF4FF2AF),
+                        _buildCategoryProduct(
+                            image: "Hood.png", color: 0xFF74ACF7),
+                        _buildCategoryProduct(
+                            image: "Ring.png", color: 0xFFFC6C8D),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 50,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              'New Achives',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'See all',
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
                     children: [
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildFeaturedProduct(
-                            name: 'Canvas',
-                            price: 30.00,
-                            image: 'Canvas.jpg',
-                          ),
-                          _buildFeaturedProduct(
-                            name: 'Polo',
-                            price: 33.00,
-                            image: 'Polo.jpg',
+                          Row(
+                            children: [
+                              _buildFeaturedProduct(
+                                name: 'Canvas',
+                                price: 30.00,
+                                image: 'Canvas.jpg',
+                              ),
+                              _buildFeaturedProduct(
+                                name: 'Polo',
+                                price: 33.00,
+                                image: 'Polo.jpg',
+                              ),
+                            ],
                           ),
                         ],
                       ),
