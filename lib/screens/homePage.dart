@@ -1,3 +1,4 @@
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:e_commerce/widgets/singleProduct.dart';
 import 'package:flutter/material.dart';
 
@@ -64,7 +65,6 @@ class HomePage extends StatelessWidget {
               Column(
                 children: [
                   Container(
-                    height: 120,
                     width: double.infinity,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -74,6 +74,22 @@ class HomePage extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Container(
+                                  height: 200,
+                                  child: Carousel(
+                                    // dotColor: Colors.white,
+                                    autoplay: true,
+                                    // dotIncreaseSize: 10,
+                                    //  dotIncreasedColor: Colors.blue,
+                                    //  dotSize: 20,
+                                    showIndicator: false,
+                                    images: const [
+                                      AssetImage('assets/images/Watch 4.jpg'),
+                                      AssetImage('assets/images/Game Pad.jpg'),
+                                      AssetImage('assets/images/Shoe 1.jpg'),
+                                    ],
+                                  ),
+                                ),
                                 Container(
                                   height: 50,
                                   child: Row(
@@ -88,7 +104,7 @@ class HomePage extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        'See all',
+                                        'View More',
                                         style: TextStyle(
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold,
@@ -132,7 +148,7 @@ class HomePage extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      'See all',
+                                      'View More',
                                       style: TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
@@ -166,19 +182,22 @@ class HomePage extends StatelessWidget {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text(
+                                children: [
+                                  const Text(
                                     'New Achives',
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  Text(
-                                    'See all',
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
+                                  GestureDetector(
+                                    onTap: () {},
+                                    child: const Text(
+                                      'View More',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -195,13 +214,13 @@ class HomePage extends StatelessWidget {
                                   children: const [
                                     SingleProduct(
                                       name: 'Male\'s Watch',
-                                      price: 30.0,
+                                      price: 40.0,
                                       image: 'Watch 2.png',
                                     ),
                                     SingleProduct(
                                       name: 'Male\'s Pants',
-                                      price: 33.0,
-                                      image: 'Pants.png',
+                                      price: 10.0,
+                                      image: 'Pants 2.png',
                                     ),
                                   ],
                                 ),

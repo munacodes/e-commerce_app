@@ -2,7 +2,8 @@ import 'package:e_commerce/widgets/widgetsExport.dart';
 import 'package:flutter/material.dart';
 
 class ListProduct extends StatelessWidget {
-  const ListProduct({Key? key}) : super(key: key);
+  final String name;
+  const ListProduct({Key? key, required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +43,10 @@ class ListProduct extends StatelessWidget {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
+                          children: [
                             Text(
-                              'Featured',
-                              style: TextStyle(
+                              name,
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -55,11 +56,14 @@ class ListProduct extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Container(
-                    height: 700,
+                    height: 650,
                     child: GridView.count(
                       mainAxisSpacing: 10,
-                      childAspectRatio: 0.7,
+                      childAspectRatio: 0.6,
                       scrollDirection: Axis.vertical,
                       crossAxisCount: 2,
                       children: const [
