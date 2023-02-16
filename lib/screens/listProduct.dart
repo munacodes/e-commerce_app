@@ -1,3 +1,4 @@
+import 'package:e_commerce/screens/homePage.dart';
 import 'package:e_commerce/widgets/widgetsExport.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,13 @@ class ListProduct extends StatelessWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             color: Colors.black,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (ctx) => HomePage(),
+                ),
+              );
+            },
           ),
           actions: [
             IconButton(

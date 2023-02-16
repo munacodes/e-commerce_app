@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'E-Commerce',
       theme: ThemeData(),
+      debugShowCheckedModeBanner: false,
       home: const Home(),
     );
   }
