@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
         //  dotSize: 20,
         showIndicator: false,
         images: const [
-          AssetImage('assets/images/Man Watch.jpg'),
+          AssetImage('assets/images/Man Watch 2.jpg'),
           AssetImage('assets/images/Game Pad.jpg'),
           AssetImage('assets/images/Shoe 1.jpg'),
         ],
