@@ -1,9 +1,7 @@
 import 'package:e_commerce/screens/signUp.dart';
-import 'package:e_commerce/widgets/changescreen.dart';
-import 'package:e_commerce/widgets/myTextFormField.dart';
-import 'package:e_commerce/widgets/passwordTextFormField.dart';
+import 'package:e_commerce/widgets/widgetsExport.dart';
 import 'package:flutter/material.dart';
-import '../widgets/mybutton.dart';
+import 'package:flutter/services.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -13,16 +11,33 @@ class Login extends StatefulWidget {
 }
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
 
+// Invaild Email Strings/Letters
 String p =
     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
-
 RegExp regExp = RegExp(p);
 
-void validation() {
+// A popup message that displays at the bottom of the screen using scaffoldMessengerKey
+const snackBar = SnackBar(
+  content: Text('Already In Use'),
+);
+
+String email;
+String password;
+
+void validation() async {
   final FormState? _form = _formKey.currentState;
-  if (_form!.validate()) {
-    print('Yes');
+  if (!_form!.validate()) {
+    try {
+      AuthResult result = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      print(result.user.uid);
+    } on PlatformException catch (e) {
+      print(e.message.toString());
+      _scaffoldMessengerKey.currentState!.showSnackBar(snackBar);
+    }
   } else {
     print('No');
   }
@@ -55,9 +70,20 @@ class _LoginState extends State<Login> {
               return '';
             },
             name: 'Email',
+            onChanged: (value) {
+              setState(() {
+                email = value;
+                print(email);
+              });
+            },
           ),
           PasswordTextFormField(
             obserText: obserText,
+            onChanged: (value) {
+              setState(() {
+                password = value;
+              });
+            },
             validator: (value) {
               if (value == '') {
                 return 'Please Enter Password';
@@ -100,6 +126,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldMessengerKey,
         body: Form(
           key: _formKey,
           child: Container(

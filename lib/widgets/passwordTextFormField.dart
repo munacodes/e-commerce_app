@@ -4,6 +4,7 @@ class PasswordTextFormField extends StatelessWidget {
   final bool obserText;
   final Function validator;
   final String name;
+  final Function onChanged;
   final Function onTap;
 
   const PasswordTextFormField(
@@ -11,6 +12,7 @@ class PasswordTextFormField extends StatelessWidget {
       required this.obserText,
       required this.validator,
       required this.name,
+      required this.onChanged,
       required this.onTap})
       : super(key: key);
 
@@ -20,6 +22,9 @@ class PasswordTextFormField extends StatelessWidget {
       obscureText: obserText,
       validator: (value) {
         validator;
+      },
+      onChanged: (value) {
+        onChanged;
       },
       decoration: InputDecoration(
         border: const OutlineInputBorder(),

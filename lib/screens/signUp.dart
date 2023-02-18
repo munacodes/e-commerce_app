@@ -1,6 +1,7 @@
 import 'package:e_commerce/screens/screensExport.dart';
 import 'package:e_commerce/widgets/widgetsExport.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -10,22 +11,37 @@ class SignUp extends StatefulWidget {
 }
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
 
+// Invaild Email Strings/Letters
 String p =
     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
-
 RegExp regExp = RegExp(p);
 
 bool obserText = true;
+String email;
+String password;
+
+// A popup message that displays at the bottom of the screen scaffoldMessengerKey
+const snackBar = SnackBar(
+  content: Text('Already In Use'),
+);
 
 class _SignUpState extends State<SignUp> {
-  void validation() {
+  void validation() async {
     final FormState? _form = _formKey.currentState;
-    if (_form!.validate()) {
-      print('Yes');
-    } else {
-      print('No');
-    }
+    if (!_form!.validate()) {
+      try {
+        AuthResult result = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password);
+      } on PlatformException catch (e) {
+        print(e.message.toString());
+        _scaffoldMessengerKey.currentState!.showSnackBar(snackBar);
+      }
+
+      print(result.user.uid);
+    } else {}
   }
 
   Widget _buildAllTextFormField() {
@@ -55,6 +71,12 @@ class _SignUpState extends State<SignUp> {
               return '';
             },
             name: 'Email',
+            onChanged: (value) {
+              setState(() {
+                email = value;
+                print(email);
+              });
+            },
           ),
           PasswordTextFormField(
             obserText: obserText,
@@ -67,6 +89,12 @@ class _SignUpState extends State<SignUp> {
               return '';
             },
             name: 'Password',
+            onChanged: (value) {
+              setState(() {
+                password = value;
+                print(password);
+              });
+            },
             onTap: () {
               FocusScope.of(context).unfocus();
               setState(() {
@@ -126,6 +154,7 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldMessengerKey,
         resizeToAvoidBottomInset: false,
         body: Form(
           key: _formKey,

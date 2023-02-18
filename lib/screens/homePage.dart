@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
         images: const [
           AssetImage('assets/images/Man Watch 2.jpg'),
           AssetImage('assets/images/Game Pad.jpg'),
-          AssetImage('assets/images/Shoe 1.jpg'),
+          AssetImage('assets/images/Shoe 6.jpg'),
         ],
       ),
     );
@@ -163,9 +163,9 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             children: [
               _buildCategoryProduct(image: "Dress.png", color: 0xFF33DCFD),
-              _buildCategoryProduct(image: "Shirt.jpg", color: 0xFFF38CDD),
+              _buildCategoryProduct(image: "Shirt.png", color: 0xFFF38CDD),
               _buildCategoryProduct(image: "Shoe.png", color: 0xFF4FF2AF),
-              _buildCategoryProduct(image: "Pants.png", color: 0xFF74ACF7),
+              _buildCategoryProduct(image: "Pant.png", color: 0xFF74ACF7),
               _buildCategoryProduct(image: "Tie.png", color: 0xFFFC6C8D),
             ],
           ),
@@ -321,7 +321,7 @@ class _HomePageState extends State<HomePage> {
                             builder: (context) => const DetailScreen(
                               name: 'Male\'s Pants',
                               price: 10.0,
-                              image: 'Pants 2.png',
+                              image: 'Pant 2.png',
                             ),
                           ),
                         );
@@ -329,7 +329,7 @@ class _HomePageState extends State<HomePage> {
                       child: const SingleProduct(
                         name: 'Male\'s Pants',
                         price: 10.0,
-                        image: 'Pants 2.png',
+                        image: 'Pant 2.png',
                       ),
                     ),
                   ],
@@ -380,30 +380,39 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          child: ListView(
-            children: [
-              Container(
+        body: FutureBuilder(
+            future: Firestore.instance
+                .collection("product")
+                .document(), /////////////////////////////////////////////////////////////////////////
+            builder: (context, snapshot) {
+              return Container(
+                height: double.infinity,
                 width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: ListView(
                   children: [
-                    _buildImageSlider(),
-                    _buildCategory(),
-                    const SizedBox(
-                      height: 20,
+                    Container(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildImageSlider(),
+                          _buildCategory(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          _buildFeature(),
+                          _buildNewAchives(),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     ),
-                    _buildFeature(),
-                    _buildNewAchives(),
                   ],
                 ),
-              ),
-            ],
-          ),
-        ),
+              );
+            }),
       ),
     );
   }

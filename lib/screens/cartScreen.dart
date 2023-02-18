@@ -1,3 +1,4 @@
+import 'package:e_commerce/screens/checkOut.dart';
 import 'package:flutter/material.dart';
 
 class CartScreen extends StatefulWidget {
@@ -14,6 +15,10 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   int count = 1;
+
+  final TextStyle myStyle = const TextStyle(
+    fontSize: 18,
+  );
 
   Widget _buildSingleCartProduct() {
     return Container(
@@ -43,8 +48,14 @@ class _CartScreenState extends State<CartScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(widget.name),
-                        const Text('Cloths'),
+                        Text(
+                          widget.name,
+                          style: myStyle,
+                        ),
+                        Text(
+                          'Cloths',
+                          style: myStyle,
+                        ),
                         Text(
                           '\$ ${widget.price.toString()}',
                           style: const TextStyle(
@@ -114,7 +125,17 @@ class _CartScreenState extends State<CartScreen> {
                 const Color(0xFF746BC9),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => CheckOut(
+                    price: widget.price,
+                    image: widget.image,
+                    name: widget.name,
+                  ),
+                ),
+              );
+            },
             child: const Text(
               'Continue',
               style: TextStyle(
