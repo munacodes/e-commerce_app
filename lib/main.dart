@@ -1,15 +1,9 @@
 import 'package:e_commerce/home.dart';
 import 'package:e_commerce/screens/screensExport.dart';
+import 'package:e_commerce/screens/signUp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-
-/*
-Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-}
-*/
 
 void main() {
   runApp(const MyApp());
@@ -25,16 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'E-Commerce',
       theme: ThemeData(),
       debugShowCheckedModeBanner: false,
-      home: StreamBuilder(
-        stream: FirebaseAuth.instance.onAuthStateChanged,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return HomePage();
-          } else {
-            return const Login();
-          }
-        },
-      ),
+      home: const Home(),
     );
   }
 }

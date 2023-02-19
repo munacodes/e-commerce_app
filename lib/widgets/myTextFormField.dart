@@ -4,12 +4,14 @@ class MyTextFormField extends StatelessWidget {
   final Function validator;
   final Function? onChanged;
   final String name;
+  final TextInputType? keyboardType;
 
   const MyTextFormField({
     Key? key,
     required this.validator,
     this.onChanged,
     required this.name,
+    this.keyboardType,
   }) : super(key: key);
 
   @override
@@ -25,6 +27,7 @@ class MyTextFormField extends StatelessWidget {
         border: const OutlineInputBorder(),
         hintText: name,
       ),
+      keyboardType: TextInputType.emailAddress,
     );
   }
 }

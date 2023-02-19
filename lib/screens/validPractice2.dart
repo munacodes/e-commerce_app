@@ -1,14 +1,12 @@
-import 'package:e_commerce/screens/screensExport.dart';
-import 'package:e_commerce/widgets/widgetsExport.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+class ValidPractice2 extends StatefulWidget {
+  const ValidPractice2({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<ValidPractice2> createState() => _ValidPractice2State();
 }
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -21,76 +19,95 @@ String p =
 RegExp regExp = RegExp(p);
 
 bool obserText = true;
-String? email;
-String? password;
+
+FirebaseAuth auth = FirebaseAuth.instance;
+var email;
+var username;
+var password;
+var phoneNumber;
 
 // A popup message that displays at the bottom of the screen scaffoldMessengerKey
 const snackBar = SnackBar(
   content: Text('Already In Use'),
+  backgroundColor: Colors.red,
 );
 
-class _SignUpState extends State<SignUp> {
-  void validation() async {
-    final FormState? _form = _formKey.currentState;
-    if (_form!.validate()) {
-      try {
-        UserCredential result = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(email: email!, password: password!);
-        print(result.user!.uid);
-      } on PlatformException catch (e) {
-        print(e.message.toString());
-        _scaffoldMessengerKey.currentState!.showSnackBar(snackBar);
-      }
-    } else {}
-  }
+void _trysubmit() async {
+  BuildContext context;
+  bool isvalid;
+  isvalid = _formKey.currentState!.validate();
 
+  if (isvalid) {
+    _formKey.currentState!.save();
+    try {
+      final Authresult = await auth.createUserWithEmailAndPassword(
+        email: email.trim(),
+        password: password.trim(),
+      );
+    } on PlatformException catch (e) {
+      _scaffoldMessengerKey.currentState!.showSnackBar(snackBar);
+    } catch (err) {
+      String message = 'error';
+      print(message);
+    }
+  }
+}
+
+class _ValidPractice2State extends State<ValidPractice2> {
   Widget _buildAllTextFormField() {
     return Container(
       height: 330,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          MyTextFormField(
+          TextFormField(
             validator: (value) {
-              if (value == "") {
-                return "Please Fill UserName";
-              } else if (value!.length < 6) {
-                return "UserName Is Too Short";
+              if (value!.isEmpty || value.length < 5) {
+                return "UserName is Empty or Too Short";
+              } else {
+                return null;
               }
-              return "";
             },
-            name: 'UserName',
-            keyboardType: TextInputType.emailAddress,
+            decoration: const InputDecoration(labelText: 'UserName'),
+            onSaved: (value) {
+              username = value;
+            },
           ),
-          MyTextFormField(
+          TextFormField(
             validator: (value) {
-              if (value == '') {
-                return 'Please Enter Email';
-              } else if (!regExp.hasMatch(value!)) {
-                return 'Email is Invaild';
+              if (value!.isEmpty ||
+                  value.contains('@') ||
+                  !regExp.hasMatch(value)) {
+                return "Enter Vaild Email";
+              } else {
+                return null;
               }
-              return '';
             },
             keyboardType: TextInputType.emailAddress,
-            name: 'Email',
             onChanged: (value) {
               setState(() {
                 email = value;
                 print(email);
               });
             },
-          ),
-          PasswordTextFormField(
-            obserText: obserText,
-            validator: (value) {
-              if (value == '') {
-                return 'Please Enter Password';
-              } else if (value!.length < 8) {
-                return 'Password Is Too Short';
-              }
-              return '';
+            decoration: const InputDecoration(labelText: 'Email'),
+            onSaved: (value) {
+              email = value;
             },
-            name: 'Password',
+          ),
+          TextFormField(
+            validator: (value) {
+              if (value!.isEmpty || value.length < 7) {
+                return "Password Is Empty or Too Short";
+              } else {
+                return null;
+              }
+            },
+            decoration: const InputDecoration(labelText: 'Password'),
+            onSaved: (value) {
+              password = value;
+            },
+            obscureText: true,
             onChanged: (value) {
               setState(() {
                 password = value;
@@ -104,16 +121,18 @@ class _SignUpState extends State<SignUp> {
               });
             },
           ),
-          MyTextFormField(
+          TextFormField(
             validator: (value) {
-              if (value == "") {
-                return "Please Enter Phone Number";
-              } else if (value!.length < 11) {
-                return "Phone Number Must be 11";
+              if (value!.isEmpty || value.length < 11) {
+                return "Phone Number is Empty or Too Short";
+              } else {
+                return null;
               }
-              return "";
             },
-            name: 'Phone Number',
+            decoration: const InputDecoration(labelText: 'Phone Number'),
+            onSaved: (value) {
+              username = value;
+            },
           ),
         ],
       ),
@@ -129,23 +148,9 @@ class _SignUpState extends State<SignUp> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _buildAllTextFormField(),
-          MyButton(
-            name: 'SignUp',
-            onPressed: () {
-              validation();
-            },
-          ),
-          ChangeScreen(
-            name: 'Login',
-            onTap: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (ctx) => const Login(),
-                  /* ctx means or is a shortform of context*/
-                ),
-              );
-            },
-            whichAccount: 'Already Have An Account?',
+          const ElevatedButton(
+            onPressed: _trysubmit,
+            child: Text('Register'),
           ),
         ],
       ),

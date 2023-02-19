@@ -1,5 +1,6 @@
 import 'package:e_commerce/screens/signUp.dart';
 import 'package:e_commerce/widgets/widgetsExport.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,16 +25,16 @@ const snackBar = SnackBar(
   content: Text('Already In Use'),
 );
 
-String email;
-String password;
+String? email;
+String? password;
 
 void validation() async {
   final FormState? _form = _formKey.currentState;
-  if (!_form!.validate()) {
+  if (_form!.validate()) {
     try {
-      AuthResult result = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      print(result.user.uid);
+      UserCredential result = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email!, password: password!);
+      print(result.user!.uid);
     } on PlatformException catch (e) {
       print(e.message.toString());
       _scaffoldMessengerKey.currentState!.showSnackBar(snackBar);

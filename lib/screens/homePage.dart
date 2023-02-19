@@ -380,39 +380,33 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        body: FutureBuilder(
-            future: Firestore.instance
-                .collection("product")
-                .document(), /////////////////////////////////////////////////////////////////////////
-            builder: (context, snapshot) {
-              return Container(
-                height: double.infinity,
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          child: ListView(
+            children: [
+              Container(
                 width: double.infinity,
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: ListView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildImageSlider(),
-                          _buildCategory(),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          _buildFeature(),
-                          _buildNewAchives(),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
+                    _buildImageSlider(),
+                    _buildCategory(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    _buildFeature(),
+                    _buildNewAchives(),
+                    const SizedBox(
+                      height: 10,
                     ),
                   ],
                 ),
-              );
-            }),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
