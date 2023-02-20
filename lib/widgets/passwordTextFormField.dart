@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 
 class PasswordTextFormField extends StatelessWidget {
-  final bool obserText;
+  final bool obscureText;
   final Function validator;
   final String name;
   final Function onChanged;
   final Function onTap;
-  final Function onSaved;
+  final Function? onSaved;
 
   const PasswordTextFormField(
       {Key? key,
-      required this.obserText,
+      required this.obscureText,
       required this.validator,
       required this.name,
       required this.onChanged,
       required this.onTap,
-      required this.onSaved})
+      this.onSaved})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText: obserText,
+      obscureText: obscureText,
       validator: (value) {
         validator;
       },
@@ -39,7 +39,7 @@ class PasswordTextFormField extends StatelessWidget {
             onTap;
           },
           child: Icon(
-            obserText == true ? Icons.visibility : Icons.visibility_off,
+            obscureText == true ? Icons.visibility : Icons.visibility_off,
             color: Colors.black,
           ),
         ),

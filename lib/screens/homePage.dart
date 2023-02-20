@@ -2,6 +2,8 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:e_commerce/screens/detailScreen.dart';
 import 'package:e_commerce/screens/listProduct.dart';
 import 'package:e_commerce/widgets/singleProduct.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -112,7 +114,9 @@ class _HomePageState extends State<HomePage> {
             title: const Text('Contact Us'),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+            },
             leading: const Icon(Icons.exit_to_app),
             title: const Text('Logout'),
           ),

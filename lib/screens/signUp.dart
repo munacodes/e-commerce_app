@@ -20,7 +20,7 @@ String p =
     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
 RegExp regExp = RegExp(p);
 
-bool obserText = true;
+bool obscureText = true;
 
 FirebaseAuth auth = FirebaseAuth.instance;
 var email;
@@ -29,25 +29,31 @@ var password;
 var phoneNumber;
 
 // A popup message that displays at the bottom of the screen scaffoldMessengerKey
-const snackBar = SnackBar(
-  content: Text('Already In Use'),
+const snackBarValid = SnackBar(
+  content: Text('Processing'),
+  backgroundColor: Colors.blue,
+);
+
+const snackBarInValid = SnackBar(
+  content: Text('Error'),
   backgroundColor: Colors.red,
 );
 
 void _validation() async {
-  BuildContext context;
+  BuildContext? context;
   bool isvalid;
   isvalid = _formKey.currentState!.validate();
 
   if (isvalid) {
     _formKey.currentState!.save();
+    ScaffoldMessenger.of(context!).showSnackBar(snackBarValid);
     try {
       final Authresult = await auth.createUserWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
       );
     } on PlatformException catch (e) {
-      _scaffoldMessengerKey.currentState!.showSnackBar(snackBar);
+      _scaffoldMessengerKey.currentState!.showSnackBar(snackBarInValid);
     } catch (err) {
       String message = 'error';
       print(message);
@@ -108,7 +114,7 @@ class _SignUpState extends State<SignUp> {
             onSaved: (value) {
               password = value;
             },
-            obserText: true,
+            obscureText: obscureText,
             onChanged: (value) {
               setState(() {
                 password = value;
@@ -118,7 +124,7 @@ class _SignUpState extends State<SignUp> {
             onTap: () {
               FocusScope.of(context).unfocus();
               setState(() {
-                obserText = obserText;
+                obscureText = !obscureText;
               });
             },
           ),

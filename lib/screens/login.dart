@@ -44,7 +44,7 @@ void validation() async {
   }
 }
 
-bool obserText = true;
+bool obscureText = true;
 
 class _LoginState extends State<Login> {
   Widget _buildAllPart() {
@@ -82,14 +82,11 @@ class _LoginState extends State<Login> {
             },
           ),
           PasswordTextFormField(
-            obserText: obserText,
+            obscureText: obscureText,
             onChanged: (value) {
               setState(() {
                 password = value;
               });
-            },
-            onSaved: (value) {
-              password = value;
             },
             validator: (value) {
               if (value == '') {
@@ -103,7 +100,7 @@ class _LoginState extends State<Login> {
             onTap: () {
               FocusScope.of(context).unfocus();
               setState(() {
-                obserText = !obserText;
+                obscureText = !obscureText;
               });
             },
           ),
