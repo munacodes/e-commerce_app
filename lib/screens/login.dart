@@ -25,9 +25,12 @@ const snackBar = SnackBar(
   content: Text('Already In Use'),
 );
 
-String? email;
-String? password;
+var email;
+var username;
+var password;
+var phoneNumber;
 
+/*
 void validation() async {
   final FormState? _form = _formKey.currentState;
   if (_form!.validate()) {
@@ -41,6 +44,29 @@ void validation() async {
     }
   } else {
     print('No');
+  }
+}
+*/
+
+void _validation() async {
+  BuildContext? context;
+  bool isvalid;
+  isvalid = _formKey.currentState!.validate();
+
+  if (isvalid) {
+    _formKey.currentState!.save();
+    ScaffoldMessenger.of(context!).showSnackBar(snackBarValid);
+    try {
+      final Authresult = await auth.createUserWithEmailAndPassword(
+        email: email.trim(),
+        password: password.trim(),
+      );
+    } on PlatformException catch (e) {
+      _scaffoldMessengerKey.currentState!.showSnackBar(snackBarInValid);
+    } catch (err) {
+      String message = 'error';
+      print(message);
+    }
   }
 }
 
@@ -107,7 +133,7 @@ class _LoginState extends State<Login> {
           MyButton(
             name: 'Login',
             onPressed: () {
-              validation();
+              _validation();
             },
           ),
           ChangeScreen(
