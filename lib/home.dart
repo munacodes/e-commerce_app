@@ -1,5 +1,5 @@
+import 'package:e_commerce/screens/SignUp.dart';
 import 'package:e_commerce/screens/screensExport.dart';
-import 'package:e_commerce/screens/signUp.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {

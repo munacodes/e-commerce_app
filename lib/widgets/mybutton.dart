@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MyButton extends StatelessWidget {
+class MyButton extends StatefulWidget {
   final Function onPressed;
   final String name;
   const MyButton({
@@ -9,6 +9,11 @@ class MyButton extends StatelessWidget {
     required this.onPressed,
   }) : super(key: key);
 
+  @override
+  State<MyButton> createState() => _MyButtonState();
+}
+
+class _MyButtonState extends State<MyButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,9 +26,9 @@ class MyButton extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          onPressed;
+          widget.onPressed;
         },
-        child: Text(name),
+        child: Text(widget.name),
       ),
     );
   }

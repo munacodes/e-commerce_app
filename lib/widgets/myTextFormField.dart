@@ -5,6 +5,9 @@ class MyTextFormField extends StatelessWidget {
   final Function? onChanged;
   final String name;
   final TextInputType? keyboardType;
+  final Function onSaved;
+  final bool? obserText;
+  final Function? onTap;
 
   const MyTextFormField({
     Key? key,
@@ -12,6 +15,9 @@ class MyTextFormField extends StatelessWidget {
     this.onChanged,
     required this.name,
     this.keyboardType,
+    required this.onSaved,
+    this.obserText,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -25,9 +31,12 @@ class MyTextFormField extends StatelessWidget {
       }),
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
-        hintText: name,
+        labelText: name,
       ),
       keyboardType: TextInputType.emailAddress,
+      onSaved: ((value) {
+        onSaved;
+      }),
     );
   }
 }

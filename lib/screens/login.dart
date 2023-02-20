@@ -77,6 +77,9 @@ class _LoginState extends State<Login> {
                 print(email);
               });
             },
+            onSaved: (value) {
+              email = value;
+            },
           ),
           PasswordTextFormField(
             obserText: obserText,
@@ -84,6 +87,9 @@ class _LoginState extends State<Login> {
               setState(() {
                 password = value;
               });
+            },
+            onSaved: (value) {
+              password = value;
             },
             validator: (value) {
               if (value == '') {

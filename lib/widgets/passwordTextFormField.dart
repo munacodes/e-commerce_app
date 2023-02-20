@@ -6,6 +6,7 @@ class PasswordTextFormField extends StatelessWidget {
   final String name;
   final Function onChanged;
   final Function onTap;
+  final Function onSaved;
 
   const PasswordTextFormField(
       {Key? key,
@@ -13,7 +14,8 @@ class PasswordTextFormField extends StatelessWidget {
       required this.validator,
       required this.name,
       required this.onChanged,
-      required this.onTap})
+      required this.onTap,
+      required this.onSaved})
       : super(key: key);
 
   @override
@@ -26,9 +28,12 @@ class PasswordTextFormField extends StatelessWidget {
       onChanged: (value) {
         onChanged;
       },
+      onSaved: (value) {
+        onSaved;
+      },
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
-        hintText: name,
+        labelText: name,
         suffixIcon: GestureDetector(
           onTap: () {
             onTap;
@@ -38,7 +43,7 @@ class PasswordTextFormField extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        hintStyle: const TextStyle(
+        labelStyle: const TextStyle(
           color: Colors.black,
         ),
       ),
