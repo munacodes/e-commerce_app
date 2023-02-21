@@ -2,7 +2,6 @@ import 'package:e_commerce/screens/screensExport.dart';
 import 'package:e_commerce/widgets/widgetsExport.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -10,10 +9,6 @@ class SignUp extends StatefulWidget {
   @override
   State<SignUp> createState() => _SignUpState();
 }
-
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
-    GlobalKey<ScaffoldMessengerState>();
 
 // Invaild Email Strings/Letters
 String p =
@@ -32,14 +27,13 @@ var phoneNumber;
 const snackBarValid = SnackBar(
   content: Text('Processing'),
   backgroundColor: Colors.blue,
-);
-
-const snackBarInValid = SnackBar(
-  content: Text('Error'),
-  backgroundColor: Colors.red,
+  margin: EdgeInsets.all(10),
 );
 
 class _SignUpState extends State<SignUp> {
+  final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+  final _formKey = GlobalKey<FormState>();
+
   void _validation() async {
     bool isvalid;
     isvalid = _formKey.currentState!.validate();
@@ -52,11 +46,9 @@ class _SignUpState extends State<SignUp> {
           email: email.trim(),
           password: password.trim(),
         );
-      } on PlatformException catch (e) {
-        _scaffoldMessengerKey.currentState!.showSnackBar(snackBarInValid);
-      } catch (err) {
-        String message = 'error';
-        print(message);
+      } on FirebaseAuthException catch (e) {
+        print('Faild with error code: ${e.code}');
+        print(e.message);
       }
     }
   }
@@ -76,7 +68,7 @@ class _SignUpState extends State<SignUp> {
               }
             },
             name: 'UserName',
-            keyboardType: TextInputType.multiline,
+            keyboardType: TextInputType.name,
             onSaved: (value) {
               username = value;
             },
@@ -87,7 +79,7 @@ class _SignUpState extends State<SignUp> {
           MyTextFormField(
             validator: (value) {
               if (value!.isEmpty || !regExp.hasMatch(value)) {
-                return "Enter Vaild Email";
+                return "Email Is Empty or Invaild Email";
               } else {
                 return null;
               }
@@ -106,7 +98,7 @@ class _SignUpState extends State<SignUp> {
           ),
           PasswordTextFormField(
             validator: (value) {
-              if (value!.isEmpty || value.length < 7) {
+              if (value!.isEmpty || value.length < 8) {
                 return "Password Is Empty or Too Short";
               } else {
                 return null;
@@ -123,6 +115,8 @@ class _SignUpState extends State<SignUp> {
                 print(password);
               });
             },
+            keyboardType: const TextInputType.numberWithOptions(
+                signed: true, decimal: true),
             onTap: () {
               FocusScope.of(context).unfocus();
               setState(() {

@@ -7,16 +7,18 @@ class PasswordTextFormField extends StatelessWidget {
   final Function onChanged;
   final Function onTap;
   final Function? onSaved;
+  final TextInputType? keyboardType;
 
-  const PasswordTextFormField(
-      {Key? key,
-      required this.obscureText,
-      required this.validator,
-      required this.name,
-      required this.onChanged,
-      required this.onTap,
-      this.onSaved})
-      : super(key: key);
+  const PasswordTextFormField({
+    Key? key,
+    required this.obscureText,
+    required this.validator,
+    required this.name,
+    required this.onChanged,
+    required this.onTap,
+    this.onSaved,
+    this.keyboardType,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +49,7 @@ class PasswordTextFormField extends StatelessWidget {
           color: Colors.black,
         ),
       ),
+      keyboardType: keyboardType,
     );
   }
 }

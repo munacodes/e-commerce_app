@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'E-Commerce',
       theme: ThemeData(),
       debugShowCheckedModeBanner: false,
-      home: const SignUp(),
+      home: const Home(),
     );
   }
 }

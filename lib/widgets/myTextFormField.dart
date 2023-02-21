@@ -33,7 +33,7 @@ class MyTextFormField extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: keyboardType,
       onSaved: ((value) {
         onSaved(value);
       }),

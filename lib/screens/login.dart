@@ -11,10 +11,6 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
-//final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
-    GlobalKey<ScaffoldMessengerState>();
-
 // Invaild Email Strings/Letters
 String p =
     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
@@ -24,11 +20,7 @@ RegExp regExp = RegExp(p);
 const snackBarValid = SnackBar(
   content: Text('Processing'),
   backgroundColor: Colors.blue,
-);
-
-const snackBarInValid = SnackBar(
-  content: Text('Error'),
-  backgroundColor: Colors.red,
+  margin: EdgeInsets.all(10),
 );
 
 var email;
@@ -39,7 +31,9 @@ var phoneNumber;
 bool obscureText = true;
 
 class _LoginState extends State<Login> {
+  final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
   final _formKey = GlobalKey<FormState>();
+
   void _validation() async {
     bool isvalid;
     isvalid = _formKey.currentState!.validate();
@@ -49,15 +43,13 @@ class _LoginState extends State<Login> {
       _formKey.currentState!.save();
       ScaffoldMessenger.of(context).showSnackBar(snackBarValid);
       try {
-        final Authresult = await auth.createUserWithEmailAndPassword(
+        final Authresult = await auth.signInWithEmailAndPassword(
           email: email.trim(),
           password: password.trim(),
         );
-      } on PlatformException catch (e) {
-        _scaffoldMessengerKey.currentState!.showSnackBar(snackBarInValid);
-      } catch (err) {
-        String message = 'error';
-        print(message);
+      } on FirebaseAuthException catch (e) {
+        print('Failed with error code: ${e.code}');
+        print(e.message);
       }
     }
   }
@@ -106,7 +98,7 @@ class _LoginState extends State<Login> {
               });
             },
             validator: (value) {
-              if (value == '') {
+              if (value.isEmpty) {
                 return 'Please Enter Password';
               } else if (value!.length < 8) {
                 return 'Password Is Too Short';
