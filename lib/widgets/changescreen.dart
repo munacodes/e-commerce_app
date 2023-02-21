@@ -22,7 +22,7 @@ class ChangeScreen extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            onTap;
+            onTap();
           },
           child: Text(
             name,

@@ -11,7 +11,7 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+//final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
 
@@ -21,8 +21,14 @@ String p =
 RegExp regExp = RegExp(p);
 
 // A popup message that displays at the bottom of the screen using scaffoldMessengerKey
-const snackBar = SnackBar(
-  content: Text('Already In Use'),
+const snackBarValid = SnackBar(
+  content: Text('Processing'),
+  backgroundColor: Colors.blue,
+);
+
+const snackBarInValid = SnackBar(
+  content: Text('Error'),
+  backgroundColor: Colors.red,
 );
 
 var email;
@@ -30,49 +36,32 @@ var username;
 var password;
 var phoneNumber;
 
-/*
-void validation() async {
-  final FormState? _form = _formKey.currentState;
-  if (_form!.validate()) {
-    try {
-      UserCredential result = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email!, password: password!);
-      print(result.user!.uid);
-    } on PlatformException catch (e) {
-      print(e.message.toString());
-      _scaffoldMessengerKey.currentState!.showSnackBar(snackBar);
-    }
-  } else {
-    print('No');
-  }
-}
-*/
-
-void _validation() async {
-  BuildContext? context;
-  bool isvalid;
-  isvalid = _formKey.currentState!.validate();
-
-  if (isvalid) {
-    _formKey.currentState!.save();
-    ScaffoldMessenger.of(context!).showSnackBar(snackBarValid);
-    try {
-      final Authresult = await auth.createUserWithEmailAndPassword(
-        email: email.trim(),
-        password: password.trim(),
-      );
-    } on PlatformException catch (e) {
-      _scaffoldMessengerKey.currentState!.showSnackBar(snackBarInValid);
-    } catch (err) {
-      String message = 'error';
-      print(message);
-    }
-  }
-}
-
 bool obscureText = true;
 
 class _LoginState extends State<Login> {
+  final _formKey = GlobalKey<FormState>();
+  void _validation() async {
+    bool isvalid;
+    isvalid = _formKey.currentState!.validate();
+    print(isvalid);
+
+    if (isvalid) {
+      _formKey.currentState!.save();
+      ScaffoldMessenger.of(context).showSnackBar(snackBarValid);
+      try {
+        final Authresult = await auth.createUserWithEmailAndPassword(
+          email: email.trim(),
+          password: password.trim(),
+        );
+      } on PlatformException catch (e) {
+        _scaffoldMessengerKey.currentState!.showSnackBar(snackBarInValid);
+      } catch (err) {
+        String message = 'error';
+        print(message);
+      }
+    }
+  }
+
   Widget _buildAllPart() {
     return Container(
       height: 300,
@@ -87,25 +76,27 @@ class _LoginState extends State<Login> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          MyTextFormField(
-            validator: (value) {
-              if (value == '') {
-                return 'Please Enter Email';
-              } else if (!regExp.hasMatch(value!)) {
-                return 'Email is Invaild';
-              }
-              return '';
-            },
-            name: 'Email',
-            onChanged: (value) {
-              setState(() {
+          Form(
+            key: _formKey,
+            child: MyTextFormField(
+              validator: (value) {
+                if (!regExp.hasMatch(value!)) {
+                  print(value);
+                  return 'Email is Invaild';
+                }
+                return 'error';
+              },
+              name: 'Email',
+              onChanged: (value) {
+                setState(() {
+                  email = value;
+                  print(email);
+                });
+              },
+              onSaved: (value) {
                 email = value;
-                print(email);
-              });
-            },
-            onSaved: (value) {
-              email = value;
-            },
+              },
+            ),
           ),
           PasswordTextFormField(
             obscureText: obscureText,
@@ -126,7 +117,7 @@ class _LoginState extends State<Login> {
             onTap: () {
               FocusScope.of(context).unfocus();
               setState(() {
-                obscureText = !obscureText;
+                obscureText = obscureText;
               });
             },
           ),
@@ -157,16 +148,13 @@ class _LoginState extends State<Login> {
     return SafeArea(
       child: Scaffold(
         key: _scaffoldMessengerKey,
-        body: Form(
-          key: _formKey,
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildAllPart(),
-              ],
-            ),
+        body: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildAllPart(),
+            ],
           ),
         ),
       ),

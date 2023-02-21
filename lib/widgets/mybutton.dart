@@ -26,7 +26,7 @@ class _MyButtonState extends State<MyButton> {
           ),
         ),
         onPressed: () {
-          widget.onPressed;
+          widget.onPressed();
         },
         child: Text(widget.name),
       ),

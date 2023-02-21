@@ -23,24 +23,24 @@ class PasswordTextFormField extends StatelessWidget {
     return TextFormField(
       obscureText: obscureText,
       validator: (value) {
-        validator;
+        validator();
       },
       onChanged: (value) {
         onChanged;
       },
       onSaved: (value) {
-        onSaved;
+        onSaved!();
       },
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
         labelText: name,
         suffixIcon: GestureDetector(
           onTap: () {
-            onTap;
+            onTap();
           },
           child: Icon(
             obscureText == true ? Icons.visibility : Icons.visibility_off,
-            color: Colors.black,
+            color: Colors.grey,
           ),
         ),
         labelStyle: const TextStyle(

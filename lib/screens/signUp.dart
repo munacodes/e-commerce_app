@@ -39,29 +39,28 @@ const snackBarInValid = SnackBar(
   backgroundColor: Colors.red,
 );
 
-void _validation() async {
-  BuildContext? context;
-  bool isvalid;
-  isvalid = _formKey.currentState!.validate();
+class _SignUpState extends State<SignUp> {
+  void _validation() async {
+    bool isvalid;
+    isvalid = _formKey.currentState!.validate();
 
-  if (isvalid) {
-    _formKey.currentState!.save();
-    ScaffoldMessenger.of(context!).showSnackBar(snackBarValid);
-    try {
-      final Authresult = await auth.createUserWithEmailAndPassword(
-        email: email.trim(),
-        password: password.trim(),
-      );
-    } on PlatformException catch (e) {
-      _scaffoldMessengerKey.currentState!.showSnackBar(snackBarInValid);
-    } catch (err) {
-      String message = 'error';
-      print(message);
+    if (isvalid) {
+      _formKey.currentState!.save();
+      ScaffoldMessenger.of(context).showSnackBar(snackBarValid);
+      try {
+        final Authresult = await auth.createUserWithEmailAndPassword(
+          email: email.trim(),
+          password: password.trim(),
+        );
+      } on PlatformException catch (e) {
+        _scaffoldMessengerKey.currentState!.showSnackBar(snackBarInValid);
+      } catch (err) {
+        String message = 'error';
+        print(message);
+      }
     }
   }
-}
 
-class _SignUpState extends State<SignUp> {
   Widget _buildAllTextFormField() {
     return Container(
       height: 330,
@@ -79,6 +78,9 @@ class _SignUpState extends State<SignUp> {
             name: 'UserName',
             keyboardType: TextInputType.multiline,
             onSaved: (value) {
+              username = value;
+            },
+            onChanged: (value) {
               username = value;
             },
           ),
@@ -138,8 +140,12 @@ class _SignUpState extends State<SignUp> {
             },
             name: 'Phone Number',
             onSaved: (value) {
-              username = value;
+              phoneNumber = value;
             },
+            onChanged: (value) {
+              phoneNumber = value;
+            },
+            keyboardType: TextInputType.phone,
           ),
         ],
       ),
