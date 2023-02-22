@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MyTextFormField extends StatelessWidget {
-  final String? Function(String? value) validator;
+  final String? Function(dynamic value) validator;
   final Function(String? value) onChanged;
   final String name;
   final TextInputType? keyboardType;

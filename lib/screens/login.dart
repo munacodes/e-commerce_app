@@ -16,21 +16,22 @@ String p =
     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
 RegExp regExp = RegExp(p);
 
-// A popup message that displays at the bottom of the screen using scaffoldMessengerKey
-const snackBarValid = SnackBar(
-  content: Text('Processing'),
-  backgroundColor: Colors.blue,
-  margin: EdgeInsets.all(10),
-);
-
-var email;
-var username;
-var password;
-var phoneNumber;
-
-bool obscureText = true;
-
 class _LoginState extends State<Login> {
+// A popup message that displays at the bottom of the screen using scaffoldMessengerKey
+  var snackBarValid = const SnackBar(
+    content: Text('Processing'),
+    backgroundColor: Colors.blue,
+    margin: EdgeInsets.all(10),
+  );
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  var email;
+  var username;
+  var password;
+  var phoneNumber;
+
+  bool obscureText = true;
+
   final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
   final _formKey = GlobalKey<FormState>();
 
@@ -91,25 +92,30 @@ class _LoginState extends State<Login> {
             ),
           ),
           PasswordTextFormField(
+            validator: (value) {
+              if (value!.isEmpty || value.length < 8) {
+                return "Password Is Empty or Too Short";
+              } else {
+                return null;
+              }
+            },
+            name: 'Password',
+            onSaved: (value) {
+              password = value;
+            },
             obscureText: obscureText,
             onChanged: (value) {
               setState(() {
                 password = value;
+                print(password);
               });
             },
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please Enter Password';
-              } else if (value!.length < 8) {
-                return 'Password Is Too Short';
-              }
-              return '';
-            },
-            name: 'Password',
+            keyboardType: const TextInputType.numberWithOptions(
+                signed: true, decimal: true),
             onTap: () {
               FocusScope.of(context).unfocus();
               setState(() {
-                obscureText = obscureText;
+                obscureText = !obscureText;
               });
             },
           ),

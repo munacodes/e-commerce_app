@@ -15,22 +15,22 @@ String p =
     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
 RegExp regExp = RegExp(p);
 
-bool obscureText = true;
+class _SignUpState extends State<SignUp> {
+  bool obscureText = true;
 
-FirebaseAuth auth = FirebaseAuth.instance;
-var email;
-var username;
-var password;
-var phoneNumber;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  var email;
+  var username;
+  var password;
+  var phoneNumber;
 
 // A popup message that displays at the bottom of the screen scaffoldMessengerKey
-const snackBarValid = SnackBar(
-  content: Text('Processing'),
-  backgroundColor: Colors.blue,
-  margin: EdgeInsets.all(10),
-);
+  var snackBarValid = const SnackBar(
+    content: Text('Processing'),
+    backgroundColor: Colors.blue,
+    margin: EdgeInsets.all(10),
+  );
 
-class _SignUpState extends State<SignUp> {
   final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
   final _formKey = GlobalKey<FormState>();
 

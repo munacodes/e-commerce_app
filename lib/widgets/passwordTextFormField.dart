@@ -28,7 +28,7 @@ class PasswordTextFormField extends StatelessWidget {
         validator();
       },
       onChanged: (value) {
-        onChanged;
+        onChanged();
       },
       onSaved: (value) {
         onSaved!();
