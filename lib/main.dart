@@ -1,4 +1,5 @@
 import 'package:e_commerce/home.dart';
+import 'package:e_commerce/screens/register.dart';
 import 'package:e_commerce/screens/screensExport.dart';
 import 'package:e_commerce/screens/signUp.dart';
 import 'package:e_commerce/screens/signUp.dart';

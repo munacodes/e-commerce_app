@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
         if (snapshot.hasData) {
           return HomePage();
         } else {
-          return const Login();
+          return Login2();
         }
       },
     );

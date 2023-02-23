@@ -25,10 +25,12 @@ class _SignUpState extends State<SignUp> {
   var phoneNumber;
 
 // A popup message that displays at the bottom of the screen scaffoldMessengerKey
-  var snackBarValid = const SnackBar(
+  static const snackBarValid = SnackBar(
     content: Text('Processing'),
     backgroundColor: Colors.blue,
-    margin: EdgeInsets.all(10),
+    shape: StadiumBorder(),
+    padding: EdgeInsets.all(10),
+    behavior: SnackBarBehavior.floating,
   );
 
   final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
@@ -61,9 +63,12 @@ class _SignUpState extends State<SignUp> {
         children: [
           MyTextFormField(
             validator: (value) {
-              if (value!.isEmpty || value.length < 5) {
-                return "UserName is Empty or Too Short";
-              } else {
+              if (value!.isEmpty) {
+                return "UserName is Empty";
+              } else if (value.length < 5) {
+                return "UserName is Too Short";
+              }
+              {
                 return null;
               }
             },
@@ -78,9 +83,12 @@ class _SignUpState extends State<SignUp> {
           ),
           MyTextFormField(
             validator: (value) {
-              if (value!.isEmpty || !regExp.hasMatch(value)) {
-                return "Email Is Empty or Invaild Email";
-              } else {
+              if (value!.isEmpty) {
+                return "Email Is Empty";
+              } else if (!regExp.hasMatch(value)) {
+                return "Invaild Email";
+              }
+              {
                 return null;
               }
             },
@@ -96,39 +104,14 @@ class _SignUpState extends State<SignUp> {
               email = value;
             },
           ),
-          PasswordTextFormField(
-            validator: (value) {
-              if (value!.isEmpty || value.length < 8) {
-                return "Password Is Empty or Too Short";
-              } else {
-                return null;
-              }
-            },
-            name: 'Password',
-            onSaved: (value) {
-              password = value;
-            },
-            obscureText: obscureText,
-            onChanged: (value) {
-              setState(() {
-                password = value;
-                print(password);
-              });
-            },
-            keyboardType: const TextInputType.numberWithOptions(
-                signed: true, decimal: true),
-            onTap: () {
-              FocusScope.of(context).unfocus();
-              setState(() {
-                obscureText = !obscureText;
-              });
-            },
-          ),
           MyTextFormField(
             validator: (value) {
-              if (value!.isEmpty || value.length < 11) {
-                return "Phone Number is Empty or Too Short";
-              } else {
+              if (value!.isEmpty) {
+                return "Phone Number Is Empty";
+              } else if (value.length < 8) {
+                return "Phone Number Is Too Short";
+              }
+              {
                 return null;
               }
             },
@@ -140,6 +123,39 @@ class _SignUpState extends State<SignUp> {
               phoneNumber = value;
             },
             keyboardType: TextInputType.phone,
+          ),
+          PasswordTextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Password Is Empty";
+              } else if (value.length < 8) {
+                return "Password Too Short";
+              }
+              {
+                return null;
+              }
+            },
+            name: 'Password',
+            obscureText: obscureText,
+            onChanged: (value) {
+              setState(() {
+                password = value;
+                print(password);
+              });
+            },
+            onSaved: (value) {
+              password = value;
+            },
+            keyboardType: const TextInputType.numberWithOptions(
+              signed: true,
+              decimal: true,
+            ),
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              setState(() {
+                obscureText = !obscureText;
+              });
+            },
           ),
         ],
       ),

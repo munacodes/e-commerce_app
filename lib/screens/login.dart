@@ -18,10 +18,12 @@ RegExp regExp = RegExp(p);
 
 class _LoginState extends State<Login> {
 // A popup message that displays at the bottom of the screen using scaffoldMessengerKey
-  var snackBarValid = const SnackBar(
+  static const snackBarValid = SnackBar(
     content: Text('Processing'),
     backgroundColor: Colors.blue,
-    margin: EdgeInsets.all(10),
+    shape: StadiumBorder(),
+    padding: EdgeInsets.all(10),
+    behavior: SnackBarBehavior.floating,
   );
 
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -100,15 +102,15 @@ class _LoginState extends State<Login> {
               }
             },
             name: 'Password',
-            onSaved: (value) {
-              password = value;
-            },
             obscureText: obscureText,
             onChanged: (value) {
               setState(() {
                 password = value;
                 print(password);
               });
+            },
+            onSaved: (value) {
+              password = value;
             },
             keyboardType: const TextInputType.numberWithOptions(
                 signed: true, decimal: true),
