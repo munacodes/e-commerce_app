@@ -3,10 +3,17 @@ import 'package:e_commerce/widgets/widgetsExport.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
+
+  @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
   final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+
   final _formKey = GlobalKey<FormState>();
-  Register({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +21,8 @@ class Register extends StatelessWidget {
     String p =
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
     RegExp regExp = RegExp(p);
+
+    bool obscureText = true;
 
     var email;
     var username;
@@ -55,91 +64,132 @@ class Register extends StatelessWidget {
     }
 
     Widget _buildAllTextFormField() {
-      return Container(
-        height: 330,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            TextFormField(
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "UserName is Empty";
-                } else if (value.length < 5) {
-                  return "UserName is Too Short";
-                }
-                {
-                  return null;
-                }
-              },
-              keyboardType: TextInputType.name,
-              decoration: const InputDecoration(labelText: "UserName"),
-              onSaved: (newValue) {
-                username = newValue;
-              },
-            ),
-            TextFormField(
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Email Is Empty";
-                } else if (regExp.hasMatch(value)) {
-                  return "Invaild Email";
-                }
-                {
-                  return null;
-                }
-              },
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(labelText: "Email"),
-              onSaved: (value) {
-                email = value;
-              },
-            ),
-            TextFormField(
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Phone Number Is Empty";
-                } else if (value.length < 8) {
-                  return "Phone Number Is Too Short";
-                }
-                {
-                  return null;
-                }
-              },
-              decoration: const InputDecoration(labelText: "Phone Number"),
-              onSaved: (value) {
-                phoneNumber = value;
-              },
-              keyboardType: TextInputType.phone,
-            ),
-            TextFormField(
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Password Is Empty";
-                } else if (value.length < 8) {
-                  return "Password Too Short";
-                }
-                {
-                  return null;
-                }
-              },
-              decoration: const InputDecoration(labelText: "Password"),
-              obscureText: true,
-              onSaved: (value) {
-                password = value;
-              },
-              keyboardType: const TextInputType.numberWithOptions(
-                signed: true,
-                decimal: true,
+      return Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Container(
+          height: 400,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextFormField(
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Field is Empty";
+                  } else if (value.length < 5) {
+                    return "UserName is Too Short";
+                  }
+                  {
+                    return null;
+                  }
+                },
+                keyboardType: TextInputType.name,
+                decoration: const InputDecoration(
+                  labelText: "UserName",
+                  labelStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                  border: OutlineInputBorder(),
+                ),
+                onSaved: (newValue) {
+                  username = newValue;
+                },
               ),
-            ),
-          ],
+              TextFormField(
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Field Is Empty";
+                  } else if (!regExp.hasMatch(value)) {
+                    return "Please Enter A Valid Email";
+                  }
+                  {
+                    return null;
+                  }
+                },
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  labelText: "Email",
+                  labelStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                  border: OutlineInputBorder(),
+                ),
+                onSaved: (value) {
+                  email = value;
+                },
+              ),
+              TextFormField(
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Field Is Empty";
+                  } else if (value.length < 8) {
+                    return "Phone Number must have at least 8 characters";
+                  }
+                  {
+                    return null;
+                  }
+                },
+                decoration: const InputDecoration(
+                  labelText: "Phone Number",
+                  labelStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                  border: OutlineInputBorder(),
+                ),
+                onSaved: (value) {
+                  phoneNumber = value;
+                },
+                keyboardType: TextInputType.phone,
+              ),
+              TextFormField(
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Field Is Empty";
+                  } else if (value.length < 8) {
+                    return "Password must have at least 8 characters";
+                  }
+                  {
+                    return null;
+                  }
+                },
+                decoration: InputDecoration(
+                  labelText: "Password",
+                  labelStyle: const TextStyle(
+                    color: Colors.black,
+                  ),
+                  border: const OutlineInputBorder(),
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
+                      setState(() {
+                        obscureText = !obscureText;
+                      });
+                    },
+                    child: Icon(
+                      obscureText == true
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                obscureText: obscureText,
+                onSaved: (value) {
+                  password = value;
+                },
+                keyboardType: const TextInputType.numberWithOptions(
+                  signed: true,
+                  decimal: true,
+                ),
+              ),
+            ],
+          ),
         ),
       );
     }
 
     Widget _buildButtonPart() {
       return Container(
-        height: 400,
+        height: 100,
         margin: const EdgeInsets.symmetric(horizontal: 10),
         width: double.infinity,
         child: Column(
@@ -175,24 +225,17 @@ class Register extends StatelessWidget {
       );
     }
 
-/*
- Scaffold(
-  body: SafeArea(
-    child: Column(),
-  ),
-); 
-*/
-    return SafeArea(
-      child: Scaffold(
-        key: _scaffoldMessengerKey,
-        resizeToAvoidBottomInset: false,
-        body: Form(
+    return Scaffold(
+      key: _scaffoldMessengerKey,
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Form(
           key: _formKey,
           child: Container(
             child: Column(
               children: [
                 Container(
-                  height: 220,
+                  height: 200,
                   width: double.infinity,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,

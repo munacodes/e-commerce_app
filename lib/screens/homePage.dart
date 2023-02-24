@@ -350,41 +350,41 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        key: _key,
-        drawer: _buildMyDrawer(),
-        appBar: AppBar(
-          title: const Text(
-            'HomePage',
-            style: TextStyle(color: Colors.black),
-          ),
-          centerTitle: true,
-          elevation: 0.0,
-          backgroundColor: Colors.grey[100],
-          leading: IconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              _key.currentState!.openDrawer();
-            },
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.search),
-              color: Colors.black,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.notifications_none),
-              color: Colors.black,
-            ),
-          ],
+    return Scaffold(
+      key: _key,
+      drawer: _buildMyDrawer(),
+      appBar: AppBar(
+        title: const Text(
+          'HomePage',
+          style: TextStyle(color: Colors.black),
         ),
-        body: Container(
+        centerTitle: true,
+        elevation: 0.0,
+        backgroundColor: Colors.grey[100],
+        leading: IconButton(
+          icon: const Icon(
+            Icons.menu,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            _key.currentState!.openDrawer();
+          },
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.search),
+            color: Colors.black,
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications_none),
+            color: Colors.black,
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: Container(
           height: double.infinity,
           width: double.infinity,
           margin: const EdgeInsets.symmetric(horizontal: 20),

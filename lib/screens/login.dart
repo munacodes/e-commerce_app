@@ -113,7 +113,9 @@ class _LoginState extends State<Login> {
               password = value;
             },
             keyboardType: const TextInputType.numberWithOptions(
-                signed: true, decimal: true),
+              signed: true,
+              decimal: true,
+            ),
             onTap: () {
               FocusScope.of(context).unfocus();
               setState(() {
@@ -145,10 +147,10 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        key: _scaffoldMessengerKey,
-        body: Container(
+    return Scaffold(
+      key: _scaffoldMessengerKey,
+      body: SafeArea(
+        child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -203,11 +203,11 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        key: _scaffoldMessengerKey,
-        resizeToAvoidBottomInset: false,
-        body: Form(
+    return Scaffold(
+      key: _scaffoldMessengerKey,
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Form(
           key: _formKey,
           child: Container(
             child: Column(

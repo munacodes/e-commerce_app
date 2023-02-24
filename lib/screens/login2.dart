@@ -4,10 +4,16 @@ import 'package:e_commerce/widgets/widgetsExport.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Login2 extends StatelessWidget {
+class Login2 extends StatefulWidget {
+  Login2({Key? key}) : super(key: key);
+
+  @override
+  State<Login2> createState() => _Login2State();
+}
+
+class _Login2State extends State<Login2> {
   final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
   final _formKey = GlobalKey<FormState>();
-  Login2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +66,7 @@ class Login2 extends StatelessWidget {
 
     Widget _buildAllPart() {
       return Container(
-        height: 300,
+        height: 400,
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -72,38 +78,61 @@ class Login2 extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Form(
-              key: _formKey,
-              child: TextFormField(
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Email Is Empty";
-                  } else if (regExp.hasMatch(value)) {
-                    return "Invaild Email";
-                  }
-                  {
-                    return null;
-                  }
-                },
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(labelText: "Email"),
-                onSaved: (value) {
-                  email = value;
-                },
-              ),
-            ),
             TextFormField(
               validator: (value) {
                 if (value!.isEmpty) {
-                  return "Password Is Empty";
-                } else if (value.length < 8) {
-                  return "Password Too Short";
+                  return "Field Is Empty";
+                } else if (!regExp.hasMatch(value)) {
+                  return "Please Enter A Valid Email";
                 }
                 {
                   return null;
                 }
               },
-              decoration: const InputDecoration(labelText: "Password"),
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                labelText: "Email",
+                labelStyle: TextStyle(
+                  color: Colors.black,
+                ),
+                border: OutlineInputBorder(),
+              ),
+              onSaved: (value) {
+                email = value;
+              },
+            ),
+            TextFormField(
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Field Is Empty";
+                } else if (value.length < 8) {
+                  return "Password must have at least 8 characters";
+                }
+                {
+                  return null;
+                }
+              },
+              decoration: InputDecoration(
+                labelText: "Password",
+                labelStyle: const TextStyle(
+                  color: Colors.black,
+                ),
+                border: const OutlineInputBorder(),
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                    setState(() {
+                      obscureText = !obscureText;
+                    });
+                  },
+                  child: Icon(
+                    obscureText == true
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
               obscureText: obscureText,
               onSaved: (value) {
                 password = value;
@@ -124,7 +153,7 @@ class Login2 extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => Register(),
+                    builder: (context) => const Register(),
                   ),
                 );
               },
@@ -135,16 +164,19 @@ class Login2 extends StatelessWidget {
       );
     }
 
-    return SafeArea(
-      child: Scaffold(
-        key: _scaffoldMessengerKey,
-        body: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildAllPart(),
-            ],
+    return Scaffold(
+      key: _scaffoldMessengerKey,
+      body: SafeArea(
+        child: Form(
+          key: _formKey,
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildAllPart(),
+              ],
+            ),
           ),
         ),
       ),

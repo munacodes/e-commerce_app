@@ -112,63 +112,63 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        bottomNavigationBar: Container(
-          height: 70,
-          width: 100,
-          margin: const EdgeInsets.symmetric(horizontal: 10),
-          padding: const EdgeInsets.only(bottom: 10),
-          child: ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                const Color(0xFF746BC9),
-              ),
+    return Scaffold(
+      bottomNavigationBar: Container(
+        height: 70,
+        width: 100,
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.only(bottom: 10),
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+              const Color(0xFF746BC9),
             ),
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => CheckOut(
-                    price: widget.price,
-                    image: widget.image,
-                    name: widget.name,
-                  ),
+          ),
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => CheckOut(
+                  price: widget.price,
+                  image: widget.image,
+                  name: widget.name,
                 ),
-              );
-            },
-            child: const Text(
-              'Continue',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
               ),
+            );
+          },
+          child: const Text(
+            'Continue',
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.white,
             ),
           ),
         ),
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            'Cart Page',
-            style: TextStyle(color: Colors.black),
+      ),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          'Cart Page',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
           ),
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
+          onPressed: () {},
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_none),
+            color: Colors.black,
             onPressed: () {},
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.notifications_none),
-              color: Colors.black,
-              onPressed: () {},
-            ),
-          ],
-        ),
-        body: ListView(
+        ],
+      ),
+      body: SafeArea(
+        child: ListView(
           children: [
             _buildSingleCartProduct(),
             _buildSingleCartProduct(),

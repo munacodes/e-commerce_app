@@ -257,38 +257,38 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            'Detail Page',
-            style: TextStyle(color: Colors.black),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => HomePage(),
-                ),
-              );
-            },
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.notifications_none),
-              color: Colors.black,
-              onPressed: () {},
-            ),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          'Detail Page',
+          style: TextStyle(color: Colors.black),
         ),
-        body: Container(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => HomePage(),
+              ),
+            );
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_none),
+            color: Colors.black,
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: Container(
           child: ListView(
             children: [
               _buildImage(),

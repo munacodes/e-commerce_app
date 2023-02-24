@@ -102,53 +102,53 @@ class _CheckOutState extends State<CheckOut> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            'CheckOut Page',
-            style: TextStyle(color: Colors.black),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-            onPressed: () {},
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.notifications_none),
-              color: Colors.black,
-              onPressed: () {},
-            ),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          'CheckOut Page',
+          style: TextStyle(color: Colors.black),
         ),
-        bottomNavigationBar: Container(
-          height: 70,
-          width: 100,
-          margin: const EdgeInsets.symmetric(horizontal: 10),
-          padding: const EdgeInsets.only(bottom: 10),
-          child: ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                const Color(0xFF746BC9),
-              ),
-            ),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () {},
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_none),
+            color: Colors.black,
             onPressed: () {},
-            child: const Text(
-              'Buy',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-              ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: Container(
+        height: 70,
+        width: 100,
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.only(bottom: 10),
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+              const Color(0xFF746BC9),
+            ),
+          ),
+          onPressed: () {},
+          child: const Text(
+            'Buy',
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.white,
             ),
           ),
         ),
-        body: Container(
+      ),
+      body: SafeArea(
+        child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child: ListView(
             children: [

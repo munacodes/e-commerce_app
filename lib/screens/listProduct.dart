@@ -8,36 +8,36 @@ class ListProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.black,
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (ctx) => HomePage(),
-                ),
-              );
-            },
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.search),
-              color: Colors.black,
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: const Icon(Icons.notifications_none),
-              color: Colors.black,
-              onPressed: () {},
-            ),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.black,
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (ctx) => HomePage(),
+              ),
+            );
+          },
         ),
-        body: Container(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            color: Colors.black,
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.notifications_none),
+            color: Colors.black,
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: ListView(
             children: [
