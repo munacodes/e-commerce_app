@@ -1,5 +1,8 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce/models/modelsExport.dart';
+import 'package:e_commerce/models/modelsExport.dart';
+import 'package:e_commerce/models/modelsExport.dart';
 import 'package:e_commerce/screens/detailScreen.dart';
 import 'package:e_commerce/screens/listProduct.dart';
 import 'package:e_commerce/widgets/singleProduct.dart';
@@ -397,7 +400,13 @@ class _HomePageState extends State<HomePage> {
                 .collection("featureproduct")
                 .get(),
             builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return const Text('Something went wrong');
+              }
               if (snapshot.connectionState == ConnectionState.waiting) {
+                Map<String, dynamic> User =
+                    snapshot.data!.products() as Map<String, dynamic>;
+              } else {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -412,6 +421,7 @@ class _HomePageState extends State<HomePage> {
                 name: snapshot.data!.doc[1]["name"],
                 price: snapshot.data!.doc[1]["price"],
               );
+
               return Container(
                 height: double.infinity,
                 width: double.infinity,

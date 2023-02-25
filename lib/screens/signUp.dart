@@ -54,7 +54,7 @@ class _SignUpState extends State<SignUp> {
         _formKey.currentState!.save();
         ScaffoldMessenger.of(context).showSnackBar(snackBarValid);
         try {
-          final Authresult = await auth.createUserWithEmailAndPassword(
+          final UserCredential = await auth.createUserWithEmailAndPassword(
             email: email.trim(),
             password: password.trim(),
           );

@@ -55,7 +55,7 @@ class _LoginState extends State<Login> {
         _formKey.currentState!.save();
         ScaffoldMessenger.of(context).showSnackBar(snackBarValid);
         try {
-          final Authresult = await auth.signInWithEmailAndPassword(
+          final UserCredential = await auth.signInWithEmailAndPassword(
             email: email.trim(),
             password: password.trim(),
           );
