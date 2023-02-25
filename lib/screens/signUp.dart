@@ -12,7 +12,6 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
-
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -42,6 +41,9 @@ class _SignUpState extends State<SignUp> {
       shape: StadiumBorder(),
       padding: EdgeInsets.all(10),
       behavior: SnackBarBehavior.floating,
+      duration: Duration(
+        seconds: 1,
+      ),
     );
 
     void _validation() async {
@@ -67,7 +69,7 @@ class _SignUpState extends State<SignUp> {
       return Padding(
         padding: const EdgeInsets.all(10.0),
         child: Container(
-          height: 400,
+          height: 350,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -151,6 +153,7 @@ class _SignUpState extends State<SignUp> {
                     return null;
                   }
                 },
+                obscureText: obscureText,
                 decoration: InputDecoration(
                   labelText: "Password",
                   labelStyle: const TextStyle(
@@ -159,20 +162,17 @@ class _SignUpState extends State<SignUp> {
                   border: const OutlineInputBorder(),
                   suffixIcon: GestureDetector(
                     onTap: () {
-                      FocusScope.of(context).unfocus();
                       setState(() {
                         obscureText = !obscureText;
                       });
+                      FocusScope.of(context).unfocus();
                     },
                     child: Icon(
-                      obscureText == true
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                      obscureText ? Icons.visibility : Icons.visibility_off,
                       color: Colors.grey,
                     ),
                   ),
                 ),
-                obscureText: obscureText,
                 onSaved: (value) {
                   password = value;
                 },

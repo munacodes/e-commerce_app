@@ -41,6 +41,9 @@ class _LoginState extends State<Login> {
       shape: StadiumBorder(),
       padding: EdgeInsets.all(10),
       behavior: SnackBarBehavior.floating,
+      duration: Duration(
+        seconds: 1,
+      ),
     );
 
     void _validation() async {
@@ -65,7 +68,7 @@ class _LoginState extends State<Login> {
 
     Widget _buildAllPart() {
       return Container(
-        height: 400,
+        height: 350,
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -111,6 +114,11 @@ class _LoginState extends State<Login> {
                   return null;
                 }
               },
+              onChanged: (value) {
+                password = value;
+                print(password);
+              },
+              obscureText: obscureText,
               decoration: InputDecoration(
                 labelText: "Password",
                 labelStyle: const TextStyle(
@@ -132,7 +140,6 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-              obscureText: obscureText,
               onSaved: (value) {
                 password = value;
               },

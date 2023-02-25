@@ -1,17 +1,26 @@
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/screens/detailScreen.dart';
 import 'package:e_commerce/screens/listProduct.dart';
 import 'package:e_commerce/widgets/singleProduct.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:e_commerce/models/modelsExport.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
+Product mobileData;
+Product menData;
+Product mp3Data;
+Product cameraData;
+Product mouseData;
+Product womenData;
 
 class _HomePageState extends State<HomePage> {
   Widget _buildCategoryProduct({required String image, required int color}) {
@@ -384,33 +393,52 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: SafeArea(
-        child: Container(
-          height: double.infinity,
-          width: double.infinity,
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          child: ListView(
-            children: [
-              Container(
+        child: FutureBuilder(
+            future: FirebaseFirestore.instance
+                .collection("products")
+                .doc("86qW7GLuZTzoDa7HdRQD")
+                .collection("featureproduct")
+                .get(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              menData = Product(
+                image: snapshot.data.doc[1]["image"],
+                name: snapshot.data.doc[1]["name"],
+                price: snapshot.data.doc[1]["price"],
+                print(menData.name);
+              );
+              return Container(
+                height: double.infinity,
                 width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: ListView(
                   children: [
-                    _buildImageSlider(),
-                    _buildCategory(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    _buildFeature(),
-                    _buildNewAchives(),
-                    const SizedBox(
-                      height: 10,
+                    Container(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildImageSlider(),
+                          _buildCategory(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          _buildFeature(),
+                          _buildNewAchives(),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
-        ),
+              );
+            }),
       ),
     );
   }

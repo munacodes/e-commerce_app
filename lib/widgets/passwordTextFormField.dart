@@ -4,7 +4,7 @@ class PasswordTextFormField extends StatelessWidget {
   final bool obscureText;
   final Function validator;
   final String name;
-  final Function onChanged;
+  final Function? onChanged;
   final Function onTap;
   final Function? onSaved;
   final TextInputType? keyboardType;
@@ -14,7 +14,7 @@ class PasswordTextFormField extends StatelessWidget {
     required this.obscureText,
     required this.validator,
     required this.name,
-    required this.onChanged,
+    this.onChanged,
     required this.onTap,
     this.onSaved,
     this.keyboardType,
@@ -28,7 +28,7 @@ class PasswordTextFormField extends StatelessWidget {
         validator();
       },
       onChanged: (value) {
-        onChanged();
+        onChanged!();
       },
       onSaved: (value) {
         onSaved!();
