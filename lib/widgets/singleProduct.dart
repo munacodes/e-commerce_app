@@ -25,7 +25,7 @@ class SingleProduct extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: AssetImage('assets/images/$image'),
+                    image: NetworkImage(image),
                   ),
                 ),
               ),

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 class ListProduct extends StatelessWidget {
   final String name;
-  const ListProduct({Key? key, required this.name}) : super(key: key);
+  final snapshot;
+  const ListProduct({Key? key, required this.name, required this.snapshot})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

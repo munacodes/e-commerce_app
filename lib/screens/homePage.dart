@@ -16,10 +16,13 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-Product? menData;
-Product? womenData;
-
 class _HomePageState extends State<HomePage> {
+  Product? menData;
+  Product? womenData;
+  Product? bulbData;
+  Product? smartPhoneData;
+  var mySnapshot;
+
   Widget _buildCategoryProduct({required String image, required int color}) {
     return CircleAvatar(
       maxRadius: 35,
@@ -221,36 +224,36 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => const DetailScreen(
-                      name: 'Man Long T-Shirt',
-                      price: 30.0,
-                      image: 'Man.png',
+                    builder: (context) => DetailScreen(
+                      name: menData!.name,
+                      price: menData!.price,
+                      image: menData!.image,
                     ),
                   ),
                 );
               },
-              child: const SingleProduct(
-                name: 'Man Long T-Shirt',
-                price: 30.0,
-                image: 'Man.png',
+              child: SingleProduct(
+                name: menData!.name,
+                price: menData!.price,
+                image: menData!.image,
               ),
             ),
             GestureDetector(
               onTap: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => const DetailScreen(
-                      name: 'Watch',
-                      price: 33.0,
-                      image: 'Watch.jpg',
+                    builder: (context) => DetailScreen(
+                      name: womenData!.name,
+                      price: womenData!.price,
+                      image: womenData!.image,
                     ),
                   ),
                 );
               },
-              child: const SingleProduct(
-                name: 'Watch',
-                price: 33.0,
-                image: 'Watch.jpg',
+              child: SingleProduct(
+                name: womenData!.name,
+                price: womenData!.price,
+                image: womenData!.image,
               ),
             ),
           ],
@@ -310,36 +313,36 @@ class _HomePageState extends State<HomePage> {
                       onTap: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => const DetailScreen(
-                              name: 'Male\'s Watch',
-                              price: 40.0,
-                              image: 'Watch 2.png',
+                            builder: (context) => DetailScreen(
+                              name: bulbData!.name,
+                              price: bulbData!.price,
+                              image: bulbData!.image,
                             ),
                           ),
                         );
                       },
-                      child: const SingleProduct(
-                        name: 'Male\'s Watch',
-                        price: 40.0,
-                        image: 'Watch 2.png',
+                      child: SingleProduct(
+                        name: bulbData!.name,
+                        price: bulbData!.price,
+                        image: bulbData!.image,
                       ),
                     ),
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => const DetailScreen(
-                              name: 'Male\'s Pants',
-                              price: 10.0,
-                              image: 'Pant 2.png',
+                            builder: (context) => DetailScreen(
+                              name: smartPhoneData!.name,
+                              price: smartPhoneData!.price,
+                              image: smartPhoneData!.image,
                             ),
                           ),
                         );
                       },
-                      child: const SingleProduct(
-                        name: 'Male\'s Pants',
-                        price: 10.0,
-                        image: 'Pant 2.png',
+                      child: SingleProduct(
+                        name: smartPhoneData!.name,
+                        price: smartPhoneData!.price,
+                        image: smartPhoneData!.image,
                       ),
                     ),
                   ],
@@ -402,43 +405,70 @@ class _HomePageState extends State<HomePage> {
                   child: CircularProgressIndicator(),
                 );
               }
+
+              mySnapshot = snapshot;
+
               menData = Product(
                 image: snapshot.data!.doc[0]["image"],
                 name: snapshot.data!.doc[0]["name"],
                 price: snapshot.data!.doc[0]["price"],
               );
+
               womenData = Product(
                 image: snapshot.data!.doc[1]["image"],
                 name: snapshot.data!.doc[1]["name"],
                 price: snapshot.data!.doc[1]["price"],
               );
-              return Container(
-                height: double.infinity,
-                width: double.infinity,
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: ListView(
-                  children: [
-                    Container(
+              return FutureBuilder(
+                  future: FirebaseFirestore.instance
+                      .collection("products")
+                      .doc("86qW7GLuZTzoDa7HdRQD")
+                      .collection("newachives")
+                      .get(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    bulbData = Product(
+                      image: snapshot.data!.doc[0]["image"],
+                      name: snapshot.data!.doc[0]["name"],
+                      price: snapshot.data!.doc[0]["price"],
+                    );
+                    smartPhoneData = Product(
+                      image: snapshot.data!.doc[2]["image"],
+                      name: snapshot.data!.doc[2]["name"],
+                      price: snapshot.data!.doc[2]["price"],
+                    );
+                    return Container(
+                      height: double.infinity,
                       width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      child: ListView(
                         children: [
-                          _buildImageSlider(),
-                          _buildCategory(),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          _buildFeature(),
-                          _buildNewAchives(),
-                          const SizedBox(
-                            height: 10,
+                          Container(
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildImageSlider(),
+                                _buildCategory(),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                _buildFeature(),
+                                _buildNewAchives(),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              );
+                    );
+                  });
             }),
       ),
     );

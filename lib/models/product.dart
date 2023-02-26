@@ -1,8 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Product {
   final String name;
   final String image;
-  final String price;
+  final double price;
   Product({required this.name, required this.image, required this.price});
 }
