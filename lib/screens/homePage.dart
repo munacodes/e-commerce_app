@@ -204,7 +204,10 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (ctx) => const ListProduct(name: 'Featured'),
+                    builder: (ctx) => ListProduct(
+                      name: 'Featured',
+                      snapshot: mySnapshot,
+                    ),
                   ),
                 );
               },
@@ -284,8 +287,10 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (ctx) =>
-                              const ListProduct(name: 'New Archives'),
+                          builder: (ctx) => ListProduct(
+                            name: 'New Archives',
+                            snapshot: mySnapshot,
+                          ),
                         ),
                       );
                     },
@@ -408,7 +413,7 @@ class _HomePageState extends State<HomePage> {
 
               mySnapshot = snapshot;
 
-              menData = Product(
+              /*  menData = Product(
                 image: snapshot.data!.doc[0]["image"],
                 name: snapshot.data!.doc[0]["name"],
                 price: snapshot.data!.doc[0]["price"],
@@ -419,6 +424,7 @@ class _HomePageState extends State<HomePage> {
                 name: snapshot.data!.doc[1]["name"],
                 price: snapshot.data!.doc[1]["price"],
               );
+              */
               return FutureBuilder(
                   future: FirebaseFirestore.instance
                       .collection("products")
@@ -431,7 +437,7 @@ class _HomePageState extends State<HomePage> {
                         child: CircularProgressIndicator(),
                       );
                     }
-                    bulbData = Product(
+                    /*     bulbData = Product(
                       image: snapshot.data!.doc[0]["image"],
                       name: snapshot.data!.doc[0]["name"],
                       price: snapshot.data!.doc[0]["price"],
@@ -441,6 +447,7 @@ class _HomePageState extends State<HomePage> {
                       name: snapshot.data!.doc[2]["name"],
                       price: snapshot.data!.doc[2]["price"],
                     );
+                    */
                     return Container(
                       height: double.infinity,
                       width: double.infinity,

@@ -70,43 +70,20 @@ class ListProduct extends StatelessWidget {
                   ),
                   Container(
                     height: 650,
-                    child: GridView.count(
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 0.6,
+                    child: GridView.builder(
+                      itemBuilder: (context, index) => SingleProduct(
+                        image: snapshot.data.documents[index]["image"],
+                        price: snapshot.data.documents[index]["price"],
+                        name: snapshot.data.documents[index]["name"],
+                      ),
                       scrollDirection: Axis.vertical,
-                      crossAxisCount: 2,
-                      children: const [
-                        SingleProduct(
-                          name: 'Man Long T-Shirt',
-                          price: 30.0,
-                          image: 'Man.png',
-                        ),
-                        SingleProduct(
-                          name: 'Watch',
-                          price: 33.0,
-                          image: 'Watch.jpg',
-                        ),
-                        SingleProduct(
-                          name: 'Hp Laptop',
-                          price: 40.0,
-                          image: 'Laptop.jpg',
-                        ),
-                        SingleProduct(
-                          name: 'Canvas',
-                          price: 25.0,
-                          image: 'Shoe 1.jpg',
-                        ),
-                        SingleProduct(
-                          name: 'Ring',
-                          price: 20.0,
-                          image: 'Ring.png',
-                        ),
-                        SingleProduct(
-                          name: 'Wireless Game Pad',
-                          price: 10.0,
-                          image: 'Game Pad.jpg',
-                        ),
-                      ],
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.7,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
                     ),
                   ),
                 ],
