@@ -398,13 +398,13 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: SafeArea(
-        child: FutureBuilder(
+        child: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
             future: FirebaseFirestore.instance
                 .collection("products")
                 .doc("86qW7GLuZTzoDa7HdRQD")
                 .collection("featureproduct")
                 .get(),
-            builder: (context, snapshot) {
+            builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -413,41 +413,39 @@ class _HomePageState extends State<HomePage> {
 
               mySnapshot = snapshot;
 
-              /*  menData = Product(
-                image: snapshot.data!.doc[0]["image"],
-                name: snapshot.data!.doc[0]["name"],
-                price: snapshot.data!.doc[0]["price"],
+              menData = Product(
+                image: snapshot.data!.docs[0]["image"],
+                name: snapshot.data!.docs[0]["name"],
+                price: snapshot.data!.docs[0]["price"],
               );
 
               womenData = Product(
-                image: snapshot.data!.doc[1]["image"],
-                name: snapshot.data!.doc[1]["name"],
-                price: snapshot.data!.doc[1]["price"],
+                image: snapshot.data!.docs[1]["image"],
+                name: snapshot.data!.docs[1]["name"],
+                price: snapshot.data!.docs[1]["price"],
               );
-              */
-              return FutureBuilder(
+              return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
                   future: FirebaseFirestore.instance
                       .collection("products")
                       .doc("86qW7GLuZTzoDa7HdRQD")
                       .collection("newachives")
                       .get(),
-                  builder: (context, snapshot) {
+                  builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
-                    /*     bulbData = Product(
-                      image: snapshot.data!.doc[0]["image"],
-                      name: snapshot.data!.doc[0]["name"],
-                      price: snapshot.data!.doc[0]["price"],
+                    bulbData = Product(
+                      image: snapshot.data!.docs[0]["image"],
+                      name: snapshot.data!.docs[0]["name"],
+                      price: snapshot.data!.docs[0]["price"],
                     );
                     smartPhoneData = Product(
-                      image: snapshot.data!.doc[2]["image"],
-                      name: snapshot.data!.doc[2]["name"],
-                      price: snapshot.data!.doc[2]["price"],
+                      image: snapshot.data!.docs[2]["image"],
+                      name: snapshot.data!.docs[2]["name"],
+                      price: snapshot.data!.docs[2]["price"],
                     );
-                    */
                     return Container(
                       height: double.infinity,
                       width: double.infinity,
