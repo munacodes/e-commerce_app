@@ -21,7 +21,8 @@ class _HomePageState extends State<HomePage> {
   Product? womenData;
   Product? bulbData;
   Product? smartPhoneData;
-  var mySnapshot;
+  var featureSnapshot;
+  var newArchivesSnapshot;
 
   Widget _buildCategoryProduct({required String image, required int color}) {
     return CircleAvatar(
@@ -190,6 +191,9 @@ class _HomePageState extends State<HomePage> {
   Widget _buildFeature() {
     return Column(
       children: [
+        const SizedBox(
+          height: 10,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -206,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(
                     builder: (ctx) => ListProduct(
                       name: 'Featured',
-                      snapshot: mySnapshot,
+                      snapshot: featureSnapshot,
                     ),
                   ),
                 );
@@ -268,6 +272,9 @@ class _HomePageState extends State<HomePage> {
   Widget _buildNewAchives() {
     return Column(
       children: [
+        const SizedBox(
+          height: 10,
+        ),
         Container(
           height: 50,
           child: Column(
@@ -289,7 +296,7 @@ class _HomePageState extends State<HomePage> {
                         MaterialPageRoute(
                           builder: (ctx) => ListProduct(
                             name: 'New Archives',
-                            snapshot: mySnapshot,
+                            snapshot: newArchivesSnapshot,
                           ),
                         ),
                       );
@@ -410,9 +417,7 @@ class _HomePageState extends State<HomePage> {
                   child: CircularProgressIndicator(),
                 );
               }
-
-              mySnapshot = snapshot;
-
+              featureSnapshot = snapshot;
               menData = Product(
                 image: snapshot.data!.docs[0]["image"],
                 name: snapshot.data!.docs[0]["name"],
@@ -436,6 +441,7 @@ class _HomePageState extends State<HomePage> {
                         child: CircularProgressIndicator(),
                       );
                     }
+                    newArchivesSnapshot = snapshot;
                     bulbData = Product(
                       image: snapshot.data!.docs[0]["image"],
                       name: snapshot.data!.docs[0]["name"],

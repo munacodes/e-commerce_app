@@ -20,7 +20,7 @@ class ListProduct extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (ctx) => HomePage(),
+                builder: (ctx) => const HomePage(),
               ),
             );
           },
@@ -41,52 +41,35 @@ class ListProduct extends StatelessWidget {
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
-          child: ListView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                children: [
-                  Container(
-                    height: 50,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              name,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+              Text(
+                name,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: GridView.builder(
+                  itemBuilder: (context, index) => SingleProduct(
+                    image: snapshot.data.docs[index]["image"],
+                    price: snapshot.data.docs[index]["price"],
+                    name: snapshot.data.docs[index]["name"],
                   ),
-                  const SizedBox(
-                    height: 10,
+                  scrollDirection: Axis.vertical,
+                  itemCount: snapshot.data.docs.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.6,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
                   ),
-                  Container(
-                    height: 650,
-                    child: GridView.builder(
-                      itemBuilder: (context, index) => SingleProduct(
-                        image: snapshot.data.documents[index]["image"],
-                        price: snapshot.data.documents[index]["price"],
-                        name: snapshot.data.documents[index]["name"],
-                      ),
-                      scrollDirection: Axis.vertical,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.7,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
           ),
