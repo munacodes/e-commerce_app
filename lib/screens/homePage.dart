@@ -23,6 +23,11 @@ class _HomePageState extends State<HomePage> {
   Product? smartPhoneData;
   var featureSnapshot;
   var newArchivesSnapshot;
+  var shirt;
+  var dress;
+  var shoe;
+  var tie;
+  var pant;
 
   Widget _buildCategoryProduct({required String image, required int color}) {
     return CircleAvatar(
@@ -176,11 +181,76 @@ class _HomePageState extends State<HomePage> {
           height: 60,
           child: Row(
             children: [
-              _buildCategoryProduct(image: "Dress.png", color: 0xFF33DCFD),
-              _buildCategoryProduct(image: "Shirt.png", color: 0xFFF38CDD),
-              _buildCategoryProduct(image: "Shoe.png", color: 0xFF4FF2AF),
-              _buildCategoryProduct(image: "Pant.png", color: 0xFF74ACF7),
-              _buildCategoryProduct(image: "Tie.png", color: 0xFFFC6C8D),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => ListProduct(
+                        name: 'Dress',
+                        snapshot: dress,
+                      ),
+                    ),
+                  );
+                },
+                child: _buildCategoryProduct(
+                    image: "Dress.png", color: 0xFF33DCFD),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => ListProduct(
+                        name: 'Shirt',
+                        snapshot: shirt,
+                      ),
+                    ),
+                  );
+                },
+                child: _buildCategoryProduct(
+                    image: "Shirt.png", color: 0xFFF38CDD),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => ListProduct(
+                        name: 'Shoe',
+                        snapshot: shoe,
+                      ),
+                    ),
+                  );
+                },
+                child:
+                    _buildCategoryProduct(image: "Shoe.png", color: 0xFF4FF2AF),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => ListProduct(
+                        name: 'Pant',
+                        snapshot: pant,
+                      ),
+                    ),
+                  );
+                },
+                child:
+                    _buildCategoryProduct(image: "Pant.png", color: 0xFF74ACF7),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => ListProduct(
+                        name: 'Tie',
+                        snapshot: tie,
+                      ),
+                    ),
+                  );
+                },
+                child:
+                    _buildCategoryProduct(image: "Tie.png", color: 0xFFFC6C8D),
+              ),
             ],
           ),
         ),
@@ -431,54 +501,72 @@ class _HomePageState extends State<HomePage> {
               );
               return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
                   future: FirebaseFirestore.instance
-                      .collection("products")
-                      .doc("86qW7GLuZTzoDa7HdRQD")
-                      .collection("newachives")
+                      .collection('category')
+                      .doc('gdmsJAqm1gihcpfrn2c4')
+                      .collection('shirt')
                       .get(),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
+                  builder: (context, shirtSnapshot) {
+                    if (shirtSnapshot.connectionState ==
+                        ConnectionState.waiting) {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
-                    newArchivesSnapshot = snapshot;
-                    bulbData = Product(
-                      image: snapshot.data!.docs[0]["image"],
-                      name: snapshot.data!.docs[0]["name"],
-                      price: snapshot.data!.docs[0]["price"],
-                    );
-                    smartPhoneData = Product(
-                      image: snapshot.data!.docs[2]["image"],
-                      name: snapshot.data!.docs[2]["name"],
-                      price: snapshot.data!.docs[2]["price"],
-                    );
-                    return Container(
-                      height: double.infinity,
-                      width: double.infinity,
-                      margin: const EdgeInsets.symmetric(horizontal: 20),
-                      child: ListView(
-                        children: [
-                          Container(
+                    shirt = shirtSnapshot;
+
+                    return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                        future: FirebaseFirestore.instance
+                            .collection("products")
+                            .doc("86qW7GLuZTzoDa7HdRQD")
+                            .collection("newachives")
+                            .get(),
+                        builder: (context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          newArchivesSnapshot = snapshot;
+                          bulbData = Product(
+                            image: snapshot.data!.docs[0]["image"],
+                            name: snapshot.data!.docs[0]["name"],
+                            price: snapshot.data!.docs[0]["price"],
+                          );
+                          smartPhoneData = Product(
+                            image: snapshot.data!.docs[2]["image"],
+                            name: snapshot.data!.docs[2]["name"],
+                            price: snapshot.data!.docs[2]["price"],
+                          );
+                          return Container(
+                            height: double.infinity,
                             width: double.infinity,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            margin: const EdgeInsets.symmetric(horizontal: 20),
+                            child: ListView(
                               children: [
-                                _buildImageSlider(),
-                                _buildCategory(),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                _buildFeature(),
-                                _buildNewAchives(),
-                                const SizedBox(
-                                  height: 10,
+                                Container(
+                                  width: double.infinity,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      _buildImageSlider(),
+                                      _buildCategory(),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      _buildFeature(),
+                                      _buildNewAchives(),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    );
+                          );
+                        });
                   });
             }),
       ),
